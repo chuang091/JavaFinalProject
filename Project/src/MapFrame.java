@@ -1,5 +1,9 @@
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
@@ -24,14 +28,42 @@ public class MapFrame extends Application {
             + "  <body onload=\"initialize()\">\r\n"
             + "    <div id=\"map\" style=\"height: 100vh; width: 100%\"></div>\r\n"
             + "  </body>\r\n"
-            + "</html>\"";
+            + "</html>";
 
     @Override
     public void start(Stage primaryStage) {
-        WebView webView = new WebView();
+        WebView webView = new WebView(); //map
         WebEngine webEngine = webView.getEngine();
         webEngine.loadContent(HTML);
-        primaryStage.setScene(new Scene(webView));
+
+        VBox webViewContainer = new VBox(webView);
+
+        Button button1 = new Button("Go to Filter");
+        button1.setOnAction(e -> new FilterFrame().show());
+
+        VBox buttonContainer = new VBox(button1);
+        
+        Label label = new Label("這邊會放餐廳內容 要再想怎麼呈現");
+        VBox textContainer = new VBox(label);
+
+        BorderPane layout = new BorderPane();
+        layout.setTop(buttonContainer);
+        layout.setCenter(textContainer);
+        layout.setBottom(webViewContainer);
+
+        Scene scene = new Scene(layout, 500, 500);
+        webViewContainer.setMaxHeight(250);
+        
+        // responsive design
+        scene.heightProperty().addListener((observable, oldValue, newValue) -> {
+            webViewContainer.setMaxHeight(newValue.doubleValue() / 2);
+        });
+
+        primaryStage.setScene(scene);
         primaryStage.show();
     }
-}
+
+
+
+    }
+
