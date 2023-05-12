@@ -16,9 +16,14 @@ public class FilterFrame extends Stage {
             new MapFrame().start(new Stage());
             //this.close(); // Close current window
         });
+        Button button3 = new Button("Go to Roulette");
+        button3.setOnAction(e -> {
+            new RouletteFrame().show();
+            //this.close(); // Close current window
+        });
 
         VBox layout = new VBox(10); // 10 is the spacing between elements in the VBox
-        layout.getChildren().addAll(button1, button2);
+        layout.getChildren().addAll(button1, button2, button3);
 
         Scene scene = new Scene(layout, 300, 250);
         this.setTitle("Filter Frame");
