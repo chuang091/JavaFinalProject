@@ -1,9 +1,14 @@
 import javafx.application.Application;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
@@ -38,17 +43,29 @@ public class MapFrame extends Application {
 
         VBox webViewContainer = new VBox(webView);
 
-        Button button1 = new Button("Go to Filter");
+        Button button1 = new Button("Back to Filter");
         button1.setOnAction(e -> new FilterFrame().show());
-
-        VBox buttonContainer = new VBox(button1);
         
+        String c1 = "依價格排序";
+        String c2 = "依距離排序";
+        ChoiceBox<String> cb = new ChoiceBox<String>();
+        cb.getItems().addAll(c1,c2);
+
+       
+        
+        Text result = new Text("RESULT");
+        result.setFont(Font.font("Serif", FontWeight.NORMAL, 25));
         Label label = new Label("這邊會放餐廳內容 要再想怎麼呈現");
-        VBox textContainer = new VBox(label);
+        VBox textContainer = new VBox(result);
+        
+        VBox buttonContainer = new VBox();
+        buttonContainer.getChildren().addAll(cb, label, button1);
+        label.setAlignment(Pos.BASELINE_RIGHT);
+        button1.setAlignment(Pos.BOTTOM_RIGHT);
 
         BorderPane layout = new BorderPane();
-        layout.setTop(buttonContainer);
-        layout.setCenter(textContainer);
+        layout.setTop(textContainer);
+        layout.setCenter(buttonContainer);
         layout.setBottom(webViewContainer);
 
         Scene scene = new Scene(layout, 500, 500);
