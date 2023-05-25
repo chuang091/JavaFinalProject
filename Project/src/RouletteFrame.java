@@ -1,12 +1,11 @@
+import javafx.animation.Interpolator;
 import javafx.animation.RotateTransition;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
-//import javafx.scene.layout.VBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Arc;
 import javafx.scene.shape.ArcType;
@@ -27,13 +26,13 @@ public class RouletteFrame extends Stage {
         Group rouletteGroup = createRouletteGroup();
         Pane pane = new Pane();
         pane.getChildren().add(rouletteGroup);
-        rouletteGroup.setTranslateX(75); // Center the group
-        rouletteGroup.setTranslateY(75); // Center the group
+        rouletteGroup.setTranslateX(75);
+        rouletteGroup.setTranslateY(75);
 
-        // Create a rotate animation //動畫properties
         rotate = new RotateTransition();
         rotate.setNode(rouletteGroup);
-        rotate.setDuration(Duration.seconds(5));
+        rotate.setDuration(Duration.seconds(2));
+        rotate.setInterpolator(Interpolator.EASE_BOTH);
         rotate.setByAngle(360);
         rotate.setCycleCount(RotateTransition.INDEFINITE);
         rotate.play();
@@ -41,6 +40,11 @@ public class RouletteFrame extends Stage {
         Button stopButton = new Button("Stop");
         stopButton.setOnAction(e -> {
             rotate.stop();
+
+            RotateTransition decelerate = new RotateTransition(Duration.seconds(2), rouletteGroup);
+            decelerate.setByAngle(360);
+            decelerate.setInterpolator(Interpolator.EASE_OUT);
+            decelerate.play();
         });
         Button restartButton = new Button("ReStart");
         restartButton.setOnAction(e -> {
@@ -49,17 +53,19 @@ public class RouletteFrame extends Stage {
 
         Polygon pointer = new Polygon();
         pointer.getPoints().addAll(new Double[]{
-            140.0, 30.0,
-            150.0, 60.0,
-            160.0, 30.0 }); //調大小的
+            150.0, 90.0,
+            145.0, 80.0,
+            155.0, 80.0});
         pointer.setFill(Color.BLACK);
+        pointer.setScaleX(2);
+        pointer.setScaleY(2);
 
         BorderPane.setAlignment(pointer, Pos.TOP_CENTER);
         layout.setTop(pointer);
         layout.setCenter(pane);
-        HBox hbox = new HBox(10); // 10 is the spacing between elements in the VBox
-        hbox.getChildren().addAll(stopButton, restartButton);
-        layout.setBottom(hbox);
+        VBox vbox = new VBox(10);
+        vbox.getChildren().addAll(stopButton, restartButton);
+        layout.setBottom(vbox);
 
         Scene scene = new Scene(layout, 300, 300);
         this.setTitle("Roulette Frame");
@@ -68,6 +74,7 @@ public class RouletteFrame extends Stage {
 
     private Group createRouletteGroup() {
         Group group = new Group();
+        Group textGroup = new Group();
 
         double centerX = 75;
         double centerY = 75;
@@ -76,25 +83,19 @@ public class RouletteFrame extends Stage {
         for (int i = 0; i < 8; i++) {
             Arc arc = new Arc(centerX, centerY, radius, radius, i * 45, 45);
             arc.setType(ArcType.ROUND);
-            arc.setFill(i % 2 == 0 ? Color.WHITE : Color.RED);
+            arc.setFill(i % 2 == 0 ? Color.BLACK : Color.RED);
             group.getChildren().add(arc);
 
-            // Create text and add it to the group
-            Text text = new Text("Section " + (i + 1));
-            text.setFont(new Font(5)); // Set the font size to ensure the text is visible
-
-            // Calculate position of the text
-            double angle = Math.toRadians(i * 45 + 22.5); // Convert to radians and adjust to center of the arc
-            double textX = centerX + (radius / 2) * Math.cos(angle); 
-            double textY = centerY + (radius / 2) * Math.sin(angle);
-
-            text.setX(textX - text.getLayoutBounds().getWidth() / 2); // Center the text
-            text.setY(textY);
-
-            group.getChildren().add(text);
+            Text text = new Text("Selection " + (i+1));
+            text.setFont(Font.font(12));
+            text.setFill(i % 2 == 0 ? Color.WHITE : Color.WHITE);
+            text.relocate(centerX + 0.7 * radius * Math.cos(Math.toRadians(i * 45 + 22.5)) - text.getLayoutBounds().getWidth()/2,
+            centerY + 0.7 * radius * Math.sin(Math.toRadians(i * 45 + 22.5)) + text.getLayoutBounds().getHeight()/4);
+            textGroup.getChildren().add(text);
         }
+
+        group.getChildren().add(textGroup);
 
         return group;
     }
-
 }
