@@ -1,7 +1,11 @@
 import javafx.animation.Interpolator;
 import javafx.animation.RotateTransition;
+import javafx.application.Platform;
 import javafx.geometry.Pos;
+import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
@@ -14,14 +18,18 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import javafx.scene.Group;
+
+import java.util.Arrays;
+import java.util.Comparator;
 
 public class RouletteFrame extends Stage {
     private RotateTransition rotate;
     private final String[] labels;
+    private Arc[] arcs;
 
     public RouletteFrame(String[] labels) {
         this.labels = labels;
+        this.arcs = new Arc[labels.length];
 
         BorderPane layout = new BorderPane();
         layout.setStyle("-fx-background-color: white;");
@@ -48,17 +56,33 @@ public class RouletteFrame extends Stage {
             decelerate.setByAngle(360);
             decelerate.setInterpolator(Interpolator.EASE_OUT);
             decelerate.play();
+            decelerate.setOnFinished(event -> {
+            	double rotationAngle =0 ;
+                rotationAngle = rouletteGroup.getRotate()+90;
+                if (rotationAngle<0) {
+                	rotationAngle+=360;
+                }
+                int index = (int) ((rotationAngle % 360) / (360.0 / labels.length));
+                System.out.println(rotationAngle);
+                int nIndex = labels.length-index-1;
+                String selectedLabel = labels[nIndex];
+                showAlert(selectedLabel);
+            });
+            
+
+
         });
         Button restartButton = new Button("ReStart");
         restartButton.setOnAction(e -> {
             rotate.play();
+            
         });
 
         Polygon pointer = new Polygon();
         pointer.getPoints().addAll(new Double[]{
-            150.0, 90.0,
-            145.0, 80.0,
-            155.0, 80.0});
+                150.0, 90.0,
+                145.0, 80.0,
+                155.0, 80.0});
         pointer.setFill(Color.BLACK);
         pointer.setScaleX(2);
         pointer.setScaleY(2);
@@ -93,13 +117,28 @@ public class RouletteFrame extends Stage {
             Text text = new Text(this.labels[i]);
             text.setFont(Font.font(12));
             text.setFill(i % 2 == 0 ? Color.WHITE : Color.WHITE);
-            text.relocate(centerX + 0.7 * radius * Math.cos(Math.toRadians(i * angle + angle/2)) - text.getLayoutBounds().getWidth()/2,
-            centerY + 0.7 * radius * Math.sin(Math.toRadians(i * angle + angle/2)) + text.getLayoutBounds().getHeight()/4);
+            text.relocate(centerX + 0.7 * radius * Math.cos(Math.toRadians(i * angle + angle / 2)) - text.getLayoutBounds().getWidth() / 2,
+                    centerY + 0.7 * radius * Math.sin(Math.toRadians(i * angle + angle / 2)) + text.getLayoutBounds().getHeight() / 4);
             textGroup.getChildren().add(text);
+
+            arcs[i] = arc;
         }
 
         group.getChildren().add(textGroup);
 
         return group;
+    }
+
+
+
+    private void showAlert(String selectedLabel) {
+        Platform.runLater(() -> {
+            Alert alert = new Alert(AlertType.INFORMATION);
+            alert.setTitle("Roulette Result");
+            alert.setHeaderText(null);
+            alert.setContentText("You have selected: " + selectedLabel);
+
+            alert.showAndWait();
+        });
     }
 }
