@@ -1,44 +1,25 @@
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 public class FirstFrame extends Stage {
     public FirstFrame() {
         Button button1 = new Button("Go to Filter");
         button1.setOnAction(e -> new FilterFrame().show());
+<<<<<<< Updated upstream
+=======
         Button button2 = new Button("Go to wheel");
-        button2.setOnAction(e -> new RouletteFrame().show());
+        button2.setOnAction(e -> new RouletteFrame(new String[] {"A", "B", "C","D","E","F"}).show());
         Text title = new Text("WELCOME");
         title.setFont(Font.font("Serif", FontWeight.NORMAL, 40));
+>>>>>>> Stashed changes
 
-        VBox vbroot = new VBox(100);
-        vbroot.setAlignment(Pos.CENTER);
-        HBox titlebox = new HBox();
-        titlebox.setAlignment(Pos.TOP_CENTER);
-        HBox buttonbox = new HBox();
-        buttonbox.setAlignment(Pos.BOTTOM_CENTER);
-        
-        titlebox.getChildren().addAll(title);
-        buttonbox.getChildren().addAll(button2, button1);
-        
-        
-        vbroot.getChildren().addAll(titlebox, buttonbox);
-        
-        button1.setPadding(new Insets(10,10,10,10));
-        button2.setPadding(new Insets(10,10,10,10));
+        StackPane layout = new StackPane();
+        layout.getChildren().add(button1);
 
 
-        Scene scene = new Scene(vbroot, 300, 250);
+        Scene scene = new Scene(layout, 300, 250);
         this.setTitle("Frame1");
         this.setScene(scene);
     }

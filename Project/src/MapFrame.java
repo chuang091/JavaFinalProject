@@ -1,21 +1,16 @@
 import javafx.application.Application;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
-import javafx.scene.text.Text;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 
 public class MapFrame extends Application {
 
-    private static final String HTML = "<!DOCTYPE html>\r\n"
+	private static final String HTML = "<!DOCTYPE html>\r\n"
             + "<html>\r\n"
             + "  <head>\r\n"
             + "    <title>Simple Map</title>\r\n"
@@ -25,7 +20,22 @@ public class MapFrame extends Application {
             + "      function initialize() {\r\n"
             + "        map = new google.maps.Map(document.getElementById('map'), {\r\n"
             + "          center: {lat: 24.987585, lng: 121.5759248},\r\n"
-            + "          zoom: 16.65\r\n"
+            + "          zoom: 14\r\n"
+            + "        });\r\n"
+            + "        var marker1 = new google.maps.Marker({\r\n"
+            + "          position: {lat: 24.986936, lng: 121.576880},\r\n"
+            + "          map: map,\r\n"
+            + "          icon: 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png'\r\n"
+            + "        });\r\n"
+            + "        var marker2 = new google.maps.Marker({\r\n"
+            + "          position: {lat: 24.9914219, lng: 121.5735300},\r\n"
+            + "          map: map\r\n"
+            + "        });\r\n"
+            + "        var infoWindow = new google.maps.InfoWindow({\r\n"
+            + "          content: '李氏餐酒館'\r\n"
+            + "        });\r\n"
+            + "        marker2.addListener('click', function() {\r\n"
+            + "          infoWindow.open(map, marker2);\r\n"
             + "        });\r\n"
             + "      }\r\n"
             + "    </script>\r\n"
@@ -35,6 +45,10 @@ public class MapFrame extends Application {
             + "  </body>\r\n"
             + "</html>";
 
+
+
+
+
     @Override
     public void start(Stage primaryStage) {
         WebView webView = new WebView(); //map
@@ -43,29 +57,17 @@ public class MapFrame extends Application {
 
         VBox webViewContainer = new VBox(webView);
 
-        Button button1 = new Button("Back to Filter");
+        Button button1 = new Button("Go to Filter");
         button1.setOnAction(e -> new FilterFrame().show());
-        
-        String c1 = "依價格排序";
-        String c2 = "依距離排序";
-        ChoiceBox<String> cb = new ChoiceBox<String>();
-        cb.getItems().addAll(c1,c2);
 
-       
+        VBox buttonContainer = new VBox(button1);
         
-        Text result = new Text("RESULT");
-        result.setFont(Font.font("Serif", FontWeight.NORMAL, 25));
         Label label = new Label("這邊會放餐廳內容 要再想怎麼呈現");
-        VBox textContainer = new VBox(result);
-        
-        VBox buttonContainer = new VBox();
-        buttonContainer.getChildren().addAll(cb, label, button1);
-        label.setAlignment(Pos.BASELINE_RIGHT);
-        button1.setAlignment(Pos.BOTTOM_RIGHT);
+        VBox textContainer = new VBox(label);
 
         BorderPane layout = new BorderPane();
-        layout.setTop(textContainer);
-        layout.setCenter(buttonContainer);
+        layout.setTop(buttonContainer);
+        layout.setCenter(textContainer);
         layout.setBottom(webViewContainer);
 
         Scene scene = new Scene(layout, 500, 500);
