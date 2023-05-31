@@ -6,12 +6,55 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="C:/Users/chuan/Documents/GitHub/JavaFinalProject/javafx-sdk-20.0.1/lib/javafx.controls.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="C:/Users/chuan/Documents/GitHub/JavaFinalProject/javafx-sdk-20.0.1/lib/javafx.fxml.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="C:/Users/chuan/Documents/GitHub/JavaFinalProject/javafx-sdk-20.0.1/lib/javafx.graphics.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="C:/Users/chuan/Documents/GitHub/JavaFinalProject/javafx-sdk-20.0.1/lib/javafx.media.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="C:/Users/chuan/Documents/GitHub/JavaFinalProject/javafx-sdk-20.0.1/lib/javafx.swing.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="C:/Users/chuan/Documents/GitHub/JavaFinalProject/javafx-sdk-20.0.1/lib/javafx.web.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="C:/Users/chuan/Documents/GitHub/JavaFinalProject/javafx-sdk-20.0.1/lib/javafx-swt.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="C:/Users/chuan/Documents/GitHub/JavaFinalProject/javafx-sdk-20.0.1/lib/mysql-connector-j-8.0.32.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/JavaFX">
 		<attributes>
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/chuan/eclipse-workspace/jar/mysql-connector-j-8.0.32.jar">
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/JavaFXGitVer">
 		<attributes>
 			<attribute name="module" value="true"/>
 		</attributes>
