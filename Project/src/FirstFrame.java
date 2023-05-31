@@ -23,45 +23,45 @@ import java.util.Random;
 import java.util.Set;
 
 public class FirstFrame extends Stage {
-    public FirstFrame() {
-    	//database
-        String server = "jdbc:mysql://140.119.19.73:3315/";
-		String database = "109304018"; 
-		String url = server + database + "?useSSL=false";
-		String username = "109304018"; 
-		String password = "x6ewb";
-		
-		String[] resNames = new String[8];
-		
-		try (Connection conn = DriverManager.getConnection(url, username, password)) {
-			System.out.println("DB in FirstFrame connected");
-			Set set = new HashSet<>();
-			while(true) {
-				int n = (int)(Math.random()*(35-1+1))+1;
-				//System.out.println(n);
-				set.add(n);
-				if(set.size()>7) {
-					break;
-				}
-			}
-			Object[] resID = set.toArray(); 
-			//String[] resNames = new String[8];
-			
-			Statement stat = conn.createStatement();
-			
-			for(int i=0; i<resID.length;i++) {
-				int n = (Integer) resID[i];
-				String query = "SELECT ``Name` FROM `restaurant` WHERE ID ="+ n;
-				stat.execute(query);
-				ResultSet result = stat.getResultSet();
-				resNames[i] = showResultSet(result);
-			}
-			
-			
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+	public FirstFrame() {
+	    //database
+	    String server = "jdbc:mysql://140.119.19.73:3315/";
+	    String database = "109304018"; 
+	    String url = server + database + "?useSSL=false";
+	    String username = "109304018"; 
+	    String password = "x6ewb";
+	    
+	    String[] resNames = new String[8];
+	    
+	    try (Connection conn = DriverManager.getConnection(url, username, password)) {
+	        System.out.println("DB in FirstFrame connected");
+	        Set<Object> set = new HashSet<>();
+	        while(true) {
+	            int n = (int)(Math.random()*(35-1+1))+1;
+	            //System.out.println(n);
+	            set.add(n);
+	            if(set.size()>7) {
+	                break;
+	            }
+	        }
+	        Object[] resID = set.toArray(); 
+	        //String[] resNames = new String[8];
+	        
+	        Statement stat = conn.createStatement();
+	        
+	        for(int i=0; i<resID.length;i++) {
+	            int n = (Integer) resID[i];
+	            String query = "SELECT `Name` FROM `restaurant` WHERE ID =" + n;
+	            stat.execute(query);
+	            ResultSet result = stat.getResultSet();
+	            resNames[i] = showResultSet(result);
+	        }
+	        
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	
+
     	
     	
         Button button1 = new Button("Go to Filter");
@@ -98,16 +98,17 @@ public class FirstFrame extends Stage {
 		ResultSetMetaData metaData = result.getMetaData();
 		int columnCount = metaData.getColumnCount();
 		String output = "";
-		for (int i = 1; i <= columnCount; i++) {
-			output += String.format("%15s", metaData.getColumnLabel(i));
-		}
-		output += "\n";
+		//for (int i = 1; i <= columnCount; i++) {
+		//	output += String.format(metaData.getColumnLabel(i));
+		//}
+		//output += "\n";
 		while (result.next()) {
 			for (int i = 1; i <= columnCount; i++) {
-				output += String.format("%15s", result.getString(i));
+				output += String.format(result.getString(i));
 			}
 			output += "\n";
 		}
+		//System.out.print(output);
 		return output;
 	}
 }

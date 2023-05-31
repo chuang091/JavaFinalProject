@@ -63,7 +63,7 @@ public class RouletteFrame extends Stage {
                 	rotationAngle+=360;
                 }
                 int index = (int) ((rotationAngle % 360) / (360.0 / labels.length));
-                System.out.println(rotationAngle);
+                //System.out.println(rotationAngle);
                 int nIndex = labels.length-index-1;
                 String selectedLabel = labels[nIndex];
                 showAlert(selectedLabel);
