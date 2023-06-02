@@ -19,9 +19,6 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-import java.util.Arrays;
-import java.util.Comparator;
-
 public class RouletteFrame extends Stage {
     private RotateTransition rotate;
     private final String[] labels;
@@ -63,7 +60,7 @@ public class RouletteFrame extends Stage {
                 	rotationAngle+=360;
                 }
                 int index = (int) ((rotationAngle % 360) / (360.0 / labels.length));
-                System.out.println(rotationAngle);
+                //System.out.println(rotationAngle);
                 int nIndex = labels.length-index-1;
                 String selectedLabel = labels[nIndex];
                 showAlert(selectedLabel);
