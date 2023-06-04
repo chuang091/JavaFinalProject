@@ -1,10 +1,11 @@
 import java.util.ArrayList;
-
+import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.Slider;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
@@ -79,18 +80,36 @@ public class FilterFrame extends Stage {
         		locationResult.add(c4[i]);
         	}
         }
-        CheckBox c41 = new CheckBox("新光路");
-        CheckBox c42 = new CheckBox("道南橋後");
-        CheckBox c43 = new CheckBox("東側");
-        CheckBox c44 = new CheckBox("麥側");
+        //CheckBox c41 = new CheckBox("新光路");
+        //CheckBox c42 = new CheckBox("道南橋後");
+        //CheckBox c43 = new CheckBox("東側");
+        //CheckBox c44 = new CheckBox("麥側");
         
+        // TODO slider part
+        Slider slider = new Slider();
+
+        slider.setMin(0);
+        slider.setMax(1000);
+        slider.setValue(400);
+        
+        slider.setShowTickLabels(true);
+        slider.setShowTickMarks(true);
+        
+        slider.setBlockIncrement(50);
+        // 監聽滑桿數值的部分 目前想法是把它改到搜尋紐再回傳 不用時時監聽。
+        slider.valueProperty().addListener((ObservableValue<? extends Number> observable, Number oldValue, Number newValue) -> {
+            double value = newValue.doubleValue();
+            System.out.println(value);
+        });
+
+        // TODO slider part
 
         VBox layout = new VBox(10); // 10 is the spacing between elements in the VBox
         HBox buttonbox = new HBox(50);
         
         buttonbox.getChildren().addAll(button1, button2);
         
-        layout.getChildren().addAll(title, q1, c11, q2, c2box, q3, c3box, q4, c4box, buttonbox);
+        layout.getChildren().addAll(title, q1, slider ,c11, q2, c2box, q3, c3box, q4, c4box, buttonbox);
         //layout.setAlignment(Pos.CENTER_LEFT);
         layout.setPadding(new Insets(10,10,10,10));
 
