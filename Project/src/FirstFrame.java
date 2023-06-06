@@ -10,6 +10,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -17,6 +18,11 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import java.util.HashSet;
 import java.util.Set;
+
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.paint.Color;
+
 
 public class FirstFrame extends Stage {
 	public FirstFrame() {
@@ -61,31 +67,49 @@ public class FirstFrame extends Stage {
     	
     	
         Button button1 = new Button("Go to Filter");
+        button1.setPrefWidth(120);
+        button1.setPrefHeight(50);
         button1.setOnAction(e -> new FilterFrame().show());
-        Button button2 = new Button("Go to wheel");
+        Button button2 = new Button("Go to Wheel");
+        button2.setPrefWidth(120);
+        button2.setPrefHeight(50);
         button2.setOnAction(e -> new RouletteFrame(resNames).show());
         
-        Text title = new Text("WELCOME");
-        title.setFont(Font.font("Serif", FontWeight.NORMAL, 40));
+        button1.setStyle("-fx-background-color: white; -fx-text-fill: #FAA381; -fx-font-size: 14px; -fx-font-family: 'Consolas'; -fx-font-weight: bold;");
+        button2.setStyle("-fx-background-color: white; -fx-text-fill: #FAA381; -fx-font-size: 14px; -fx-font-family: 'Consolas'; -fx-font-weight: bold;");
+        
+        Text title = new Text("What to Eat?");
+        title.setFont(Font.font("Consolas", FontWeight.BOLD, 40));
+        title.setFill(Color.web("#FAA381"));
+       
+        VBox vbroot = new VBox(20);
+        //background color
+        vbroot.setStyle("-fx-background-color: #FCF6BD;");
 
-        VBox vbroot = new VBox(100);
         vbroot.setAlignment(Pos.CENTER);
-        HBox titlebox = new HBox();
-        titlebox.setAlignment(Pos.TOP_CENTER);
-        HBox buttonbox = new HBox();
-        buttonbox.setAlignment(Pos.BOTTOM_CENTER);
         
-        titlebox.getChildren().addAll(title);
-        buttonbox.getChildren().addAll(button2, button1);
+        StackPane imagePane = new StackPane();
+        
+        // Image
+        Image image = new Image("file:/C:/Users/Ann/Desktop/sticker (2).png");
+        ImageView imageView = new ImageView(image);
+        imageView.setFitWidth(200);
+        imageView.setFitHeight(200);
+        
+        imagePane.getChildren().add(imageView);
+        
+        HBox buttonBox = new HBox(20);
+        buttonBox.setAlignment(Pos.CENTER);
+        buttonBox.getChildren().addAll(button2, button1);
+        
+        vbroot.getChildren().addAll(title, imagePane, buttonBox);
+        
+        StackPane root = new StackPane(vbroot);
+        root.setAlignment(Pos.CENTER);
         
         
-        vbroot.getChildren().addAll(titlebox, buttonbox);
-        
-        button1.setPadding(new Insets(10,10,10,10));
-        button2.setPadding(new Insets(10,10,10,10));
-
-
-        Scene scene = new Scene(vbroot, 300, 250);
+        Scene scene = new Scene(root, 320, 480);
+        scene.getStylesheets().add("path/to/styles.css");
         this.setTitle("Frame1");
         this.setScene(scene);
     }
