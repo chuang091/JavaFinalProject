@@ -8,6 +8,7 @@ import java.util.Collections;
 
 import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
@@ -28,7 +29,7 @@ public class FilterFrame extends Stage {
 
 	public FilterFrame() {
 
-		Button button1 = new Button("Back to Welcome Page");
+		Button button1 = new Button("Back to Home");
 		button1.setOnAction(e -> {
 			new FirstFrame().show();
 			// this.close(); // Close current window
@@ -99,7 +100,7 @@ public class FilterFrame extends Stage {
 
 
 		Text title = new Text("Filter");
-		title.setFont(Font.font("Serif", FontWeight.NORMAL, 25));
+		title.setFont(Font.font("Consolas", FontWeight.BOLD, 40));
 
 		Label q1 = new Label("價格");
 		CheckBox c11 = new CheckBox("(1)");
@@ -188,14 +189,23 @@ public class FilterFrame extends Stage {
 
 		VBox layout = new VBox(10); // 10 is the spacing between elements in the VBox
 		HBox buttonbox = new HBox(50);
+		layout.setStyle("-fx-background-color: #FCF6BD;");
 
+		button1.setStyle("-fx-background-color: white; -fx-text-fill: black; -fx-font-size: 14px; -fx-font-family: 'Consolas'; -fx-font-weight: bold;");
+        button2.setStyle("-fx-background-color: white; -fx-text-fill: black; -fx-font-size: 14px; -fx-font-family: 'Consolas'; -fx-font-weight: bold;");
+        button1.setPrefWidth(120);
+        button1.setPrefHeight(50);
+        button2.setPrefWidth(120);
+        button2.setPrefHeight(50);
+        buttonbox.setAlignment(Pos.CENTER);
 		buttonbox.getChildren().addAll(button1, button2);
+		
 
 		layout.getChildren().addAll(title, q1, slider, c11, q2, c2box, q3, c3box, q4, c4box, buttonbox);
-		// layout.setAlignment(Pos.CENTER_LEFT);
+		layout.setAlignment(Pos.CENTER_LEFT);
 		layout.setPadding(new Insets(10, 10, 10, 10));
 
-		Scene scene = new Scene(layout, 320, 350);
+		Scene scene = new Scene(layout, 320, 480);
 		this.setTitle("Filter Frame");
 		this.setScene(scene);
 
