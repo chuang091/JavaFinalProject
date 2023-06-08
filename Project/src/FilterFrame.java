@@ -16,6 +16,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
@@ -101,13 +102,35 @@ public class FilterFrame extends Stage {
 
 		Text title = new Text("Filter");
 		title.setFont(Font.font("Consolas", FontWeight.BOLD, 40));
+		title.setFill(Color.web("#FAA381"));
+		title.setLayoutX(10);
+		title.setLayoutY(10);
 
-		Label q1 = new Label("價格");
-		CheckBox c11 = new CheckBox("(1)");
+		Label q1 = new Label("種類");
+		q1.setFont(Font.font("Microsoft YaHei", 13));
+		HBox c1box = new HBox(10);
+		String[] c1 = { "台式", "日式", "美式", "韓式", "餐酒館" };
+		for (int i = 0; i < c1.length; i++) {
+			CheckBox c = new CheckBox(c1[i]);
+			c1box.getChildren().add(c);
+			// c.setIndeterminate(true);
 
-		Label q2 = new Label("種類");
+			final int index = i;
+
+			c.selectedProperty().addListener(
+					(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) -> {
+						if (newValue) {
+							typeResult.add(c1[index]);
+						} else {
+							typeResult.remove(c1[index]);
+						}
+					});
+		}
+
+		Label q2 = new Label("預計用餐時間");
+		q2.setFont(Font.font("Microsoft YaHei", 13));
 		HBox c2box = new HBox(10);
-		String[] c2 = { "台式", "日式", "美式", "韓式", "餐酒館" };
+		String[] c2 = { "1小時內", "1-2小時", "3小時以上" };
 		for (int i = 0; i < c2.length; i++) {
 			CheckBox c = new CheckBox(c2[i]);
 			c2box.getChildren().add(c);
@@ -118,16 +141,17 @@ public class FilterFrame extends Stage {
 			c.selectedProperty().addListener(
 					(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) -> {
 						if (newValue) {
-							typeResult.add(c2[index]);
+							timeResult.add(c2[index]);
 						} else {
-							typeResult.remove(c2[index]);
+							timeResult.remove(c2[index]);
 						}
 					});
 		}
 
-		Label q3 = new Label("預計用餐時間");
+		Label q3 = new Label("地點");
+		q3.setFont(Font.font("Microsoft YaHei", 13));
 		HBox c3box = new HBox(10);
-		String[] c3 = { "1小時內", "1-2小時", "3小時以上" };
+		String[] c3 = { "新光路", "道南橋後", "東側", "麥側" };
 		for (int i = 0; i < c3.length; i++) {
 			CheckBox c = new CheckBox(c3[i]);
 			c3box.getChildren().add(c);
@@ -138,36 +162,16 @@ public class FilterFrame extends Stage {
 			c.selectedProperty().addListener(
 					(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) -> {
 						if (newValue) {
-							timeResult.add(c3[index]);
+							locationResult.add(c3[index]);
 						} else {
-							timeResult.remove(c3[index]);
+							locationResult.remove(c3[index]);
 						}
 					});
 		}
-
-		Label q4 = new Label("地點");
-		HBox c4box = new HBox(10);
-		String[] c4 = { "新光路", "道南橋後", "東側", "麥側" };
-		for (int i = 0; i < c4.length; i++) {
-			CheckBox c = new CheckBox(c4[i]);
-			c4box.getChildren().add(c);
-			// c.setIndeterminate(true);
-
-			final int index = i;
-
-			c.selectedProperty().addListener(
-					(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) -> {
-						if (newValue) {
-							locationResult.add(c4[index]);
-						} else {
-							locationResult.remove(c4[index]);
-						}
-					});
-		}
-		// CheckBox c41 = new CheckBox("新光路");
-		// CheckBox c42 = new CheckBox("道南橋後");
-		// CheckBox c43 = new CheckBox("東側");
-		// CheckBox c44 = new CheckBox("麥側");
+		// CheckBox c31 = new CheckBox("新光路");
+		// CheckBox c32 = new CheckBox("道南橋後");
+		// CheckBox c33 = new CheckBox("東側");
+		// CheckBox c34 = new CheckBox("麥側");
 
 		// TODO slider part
 		Slider slider = new Slider();
@@ -184,24 +188,29 @@ public class FilterFrame extends Stage {
 				.addListener((ObservableValue<? extends Number> observable, Number oldValue, Number newValue) -> {
 					priceMax = newValue.doubleValue();
 				});
-
+		
+		
 		// TODO slider part
 
-		VBox layout = new VBox(10); // 10 is the spacing between elements in the VBox
-		HBox buttonbox = new HBox(50);
+		VBox layout = new VBox(20); // 10 is the spacing between elements in the VBox
+		HBox buttonbox = new HBox(60);
 		layout.setStyle("-fx-background-color: #FCF6BD;");
 
-		button1.setStyle("-fx-background-color: white; -fx-text-fill: black; -fx-font-size: 14px; -fx-font-family: 'Consolas'; -fx-font-weight: bold;");
-        button2.setStyle("-fx-background-color: white; -fx-text-fill: black; -fx-font-size: 14px; -fx-font-family: 'Consolas'; -fx-font-weight: bold;");
+		button1.setStyle("-fx-background-color: white; -fx-text-fill: #FAA381; -fx-font-size: 14px; -fx-font-family: 'Consolas'; -fx-font-weight: bold;");
+        button2.setStyle("-fx-background-color: white; -fx-text-fill: #FAA381; -fx-font-size: 14px; -fx-font-family: 'Consolas'; -fx-font-weight: bold;");
         button1.setPrefWidth(120);
         button1.setPrefHeight(50);
         button2.setPrefWidth(120);
         button2.setPrefHeight(50);
-        buttonbox.setAlignment(Pos.CENTER);
+        // button(x,y)
+        button1.setLayoutX(70); 
+        button1.setLayoutY(200); 
+        button2.setLayoutX(210); 
+        button2.setLayoutY(200); 
 		buttonbox.getChildren().addAll(button1, button2);
 		
 
-		layout.getChildren().addAll(title, q1, slider, c11, q2, c2box, q3, c3box, q4, c4box, buttonbox);
+		layout.getChildren().addAll(title, slider, q1, c1box, q2, c2box, q3, c3box, buttonbox);
 		layout.setAlignment(Pos.CENTER_LEFT);
 		layout.setPadding(new Insets(10, 10, 10, 10));
 
