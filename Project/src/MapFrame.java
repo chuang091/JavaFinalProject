@@ -61,7 +61,10 @@ public class MapFrame extends Application {
 
         VBox webViewContainer = new VBox(webView);
 
-        Button button1 = new Button("Go to Filter");
+        Button button1 = new Button("Back to Filter");
+        button1.setStyle("-fx-background-color: white; -fx-text-fill: #FAA381; -fx-font-size: 14px; -fx-font-family: 'Consolas'; -fx-font-weight: bold;");
+        button1.setPrefWidth(150);
+        button1.setPrefHeight(50);
         button1.setOnAction(e -> new FilterFrame().show());
 
         VBox buttonContainer = new VBox(button1);
@@ -70,11 +73,12 @@ public class MapFrame extends Application {
         VBox textContainer = new VBox(label);
 
         BorderPane layout = new BorderPane();
+        layout.setStyle("-fx-background-color: #FCF6BD;");
         layout.setTop(buttonContainer);
         layout.setCenter(textContainer);
         layout.setBottom(webViewContainer);
 
-        Scene scene = new Scene(layout, 500, 500);
+        Scene scene = new Scene(layout, 320, 480);
         webViewContainer.setMaxHeight(250);
 
         // responsive design
