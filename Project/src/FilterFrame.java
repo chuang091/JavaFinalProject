@@ -41,12 +41,26 @@ public class FilterFrame extends Stage {
 		    String url = server + database + "?useSSL=false";
 		    String username = "109304018"; 
 		    String password = "x6ewb";
-		    
+
 		    // Get the selected filters
 		    ArrayList<String> selectedTypes = getSelectedType();
 		    ArrayList<String> selectedTimes = getSelectedTime();
 		    ArrayList<String> selectedLocations = getSelectedLocation();
 		    double selectedPriceMax = getPriceMax();
+
+		    // Check if no options are selected, then select all options by default
+		    if (selectedTypes.isEmpty()) {
+		        // Select all types
+		        selectedTypes = getAllTypes(); // Replace getAllTypes() with the method that returns all available types
+		    }
+		    if (selectedTimes.isEmpty()) {
+		        // Select all times
+		        selectedTimes = getAllTimes(); // Replace getAllTimes() with the method that returns all available times
+		    }
+		    if (selectedLocations.isEmpty()) {
+		        // Select all locations
+		        selectedLocations = getAllLocations(); // Replace getAllLocations() with the method that returns all available locations
+		    }
 
 		    try (Connection conn = DriverManager.getConnection(url, username, password)) {
 		        // Build a query with a ? placeholder for each selected item
@@ -80,10 +94,18 @@ public class FilterFrame extends Stage {
 		        // Execute the query
 		        ResultSet resultSet = preparedStatement.executeQuery();
 		        while (resultSet.next()) {
+		            int id = resultSet.getInt("ID");
 		            String name = resultSet.getString("Name");
+		            double lowerLimit = resultSet.getDouble("P_lower_limit");
+		            double higherLimit = resultSet.getDouble("P_higher_limit");
+		            int veg = resultSet.getInt("Veg");
+		            String type = resultSet.getString("Type");
+		            String diningTime = resultSet.getString("Dining_time");
+		            String position = resultSet.getString("Position");
+		            double rate = resultSet.getDouble("Rate");
 		            double latitude = resultSet.getDouble("Latitude");
 		            double longitude = resultSet.getDouble("Longitude");
-		            selectedPlacesList.add(new Place(latitude, longitude, name));
+		            selectedPlacesList.add(new Place(id, name, lowerLimit, higherLimit, veg, type, diningTime, position, rate, latitude, longitude));
 		            //System.out.println(name);
 		        }
 
@@ -91,18 +113,19 @@ public class FilterFrame extends Stage {
 		        Place[] selectedPlaces = selectedPlacesList.toArray(new Place[0]);
 
 		        new MapFrame(selectedPlaces).start(new Stage());
-		     // this.close(); // Close current window
+		        // this.close(); // Close current window
 		    } catch (SQLException ex) {
 		        ex.printStackTrace();
 		    }
 		});
 
 
+
 		Text title = new Text("Filter");
 		title.setFont(Font.font("Serif", FontWeight.NORMAL, 25));
 
 		Label q1 = new Label("價格");
-		CheckBox c11 = new CheckBox("(1)");
+		//CheckBox c11 = new CheckBox("(1)");
 
 		Label q2 = new Label("種類");
 		HBox c2box = new HBox(10);
@@ -191,7 +214,7 @@ public class FilterFrame extends Stage {
 
 		buttonbox.getChildren().addAll(button1, button2);
 
-		layout.getChildren().addAll(title, q1, slider, c11, q2, c2box, q3, c3box, q4, c4box, buttonbox);
+		layout.getChildren().addAll(title, q1, slider, q2, c2box, q3, c3box, q4, c4box, buttonbox);
 		// layout.setAlignment(Pos.CENTER_LEFT);
 		layout.setPadding(new Insets(10, 10, 10, 10));
 
@@ -200,6 +223,38 @@ public class FilterFrame extends Stage {
 		this.setScene(scene);
 
 	}
+
+
+
+	public ArrayList<String> getAllTypes() {
+	    ArrayList<String> allTypes = new ArrayList<>();
+	    allTypes.add("台式");
+	    allTypes.add("日式");
+	    allTypes.add("美式");
+	    allTypes.add("韓式");
+	    allTypes.add("餐酒館");
+	    return allTypes;
+	}
+
+	public ArrayList<String> getAllTimes() {
+	    ArrayList<String> allTimes = new ArrayList<>();
+	    allTimes.add("1小時內");
+	    allTimes.add("1-2小時");
+	    allTimes.add("3小時以上");
+	    return allTimes;
+	}
+
+	public ArrayList<String> getAllLocations() {
+	    ArrayList<String> allLocations = new ArrayList<>();
+	    allLocations.add("新光路");
+	    allLocations.add("道南橋後");
+	    allLocations.add("東側");
+	    allLocations.add("麥側");
+	    return allLocations;
+	}
+
+
+
 
 	public double getPriceMax() {
 		return priceMax;
