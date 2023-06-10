@@ -89,7 +89,7 @@ public class FirstFrame extends Stage {
         StackPane imagePane = new StackPane();
 
         // 圖片
-        Image image = new Image("file:/C:/Users/Ann/Desktop/sticker (2).png");
+        Image image = new Image("sticker (2).png");
         ImageView imageView = new ImageView(image);
         imageView.setFitWidth(200);
         imageView.setFitHeight(200);

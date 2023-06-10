@@ -74,7 +74,9 @@ public class MapFrame extends Application {
         button1.setPrefWidth(150);
         button1.setPrefHeight(50);
 		button1.setOnAction(e -> new FilterFrame().show());
-		Button button2 = new Button("Quick selction by Wheel");
+		Button button2 = new Button("Quick selction");
+		button2.setStyle("-fx-background-color: white; -fx-text-fill: #FAA381; -fx-font-size: 14px; -fx-font-family: 'Consolas'; -fx-font-weight: bold;");
+
 		button2.setOnAction(e -> {
 			if (places.length <= 6) {
 				String[] names = new String[places.length];
@@ -177,8 +179,8 @@ public class MapFrame extends Application {
 
         BorderPane layout = new BorderPane();
         layout.setStyle("-fx-background-color: #FCF6BD;");
-        layout.setTop(buttonContainer);
-        layout.setCenter(textContainer);
+        layout.setCenter(buttonContainer);
+        
         layout.setBottom(webViewContainer);
 
         Scene scene = new Scene(layout, 320, 480);
