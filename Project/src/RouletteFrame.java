@@ -8,6 +8,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -74,24 +75,34 @@ public class RouletteFrame extends Stage {
             rotate.play();
             
         });
+        
+        stopButton.setStyle("-fx-background-color: white; -fx-text-fill: #F27059; -fx-font-size: 14px; -fx-font-family: 'Consolas'; -fx-font-weight: bolder;");
+        restartButton.setStyle("-fx-background-color: white; -fx-text-fill: #FAA381; -fx-font-size: 14px; -fx-font-family: 'Consolas'; -fx-font-weight: bold;");
+        stopButton.setPrefWidth(120);
+        stopButton.setPrefHeight(50);
+        restartButton.setPrefWidth(120);
+        restartButton.setPrefHeight(50);
 
         Polygon pointer = new Polygon();
         pointer.getPoints().addAll(new Double[]{
                 150.0, 90.0,
                 145.0, 80.0,
                 155.0, 80.0});
-        pointer.setFill(Color.BLACK);
+        pointer.setFill(Color.web("#FAA381"));
         pointer.setScaleX(2);
         pointer.setScaleY(2);
 
         BorderPane.setAlignment(pointer, Pos.TOP_CENTER);
         layout.setTop(pointer);
         layout.setCenter(pane);
-        VBox vbox = new VBox(10);
-        vbox.getChildren().addAll(stopButton, restartButton);
-        layout.setBottom(vbox);
+        layout.setStyle("-fx-background-color: #FCF6BD;");
+        VBox buttonbox = new VBox(10);
+        buttonbox.setAlignment(Pos.CENTER);
+        buttonbox.getChildren().addAll(stopButton, restartButton);
+        layout.setBottom(buttonbox);
+        buttonbox.setStyle("-fx-background-color: #FCF6BD;");
 
-        Scene scene = new Scene(layout, 300, 300);
+        Scene scene = new Scene(layout, 320, 480);
         this.setTitle("Roulette Frame");
         this.setScene(scene);
     }
@@ -108,7 +119,7 @@ public class RouletteFrame extends Stage {
             double angle = 360.0 / this.labels.length;
             Arc arc = new Arc(centerX, centerY, radius, radius, i * angle, angle);
             arc.setType(ArcType.ROUND);
-            arc.setFill(i % 2 == 0 ? Color.BLACK : Color.RED);
+            arc.setFill(i % 2 == 0 ? Color.web("#FAA381") : Color.web("#F27059"));
             group.getChildren().add(arc);
 
             Text text = new Text(this.labels[i]);
