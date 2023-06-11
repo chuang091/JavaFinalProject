@@ -73,7 +73,9 @@ public class MapFrame extends Application {
         button1.setStyle("-fx-background-color: white; -fx-text-fill: #FAA381; -fx-font-size: 14px; -fx-font-family: 'Consolas'; -fx-font-weight: bold;");
         button1.setPrefWidth(140);
         button1.setPrefHeight(50);
-		button1.setOnAction(e -> new FilterFrame().show());
+		button1.setOnAction(e ->{ new FilterFrame().show();
+		primaryStage.close();
+		});
 		Button button2 = new Button("Quick selction");
 		button2.setStyle("-fx-background-color: white; -fx-text-fill: #FAA381; -fx-font-size: 14px; -fx-font-family: 'Consolas'; -fx-font-weight: bold;");
 		button2.setPrefWidth(140);
@@ -105,6 +107,7 @@ public class MapFrame extends Application {
 				}
 				new RouletteFrame(names).show();
 			}
+			primaryStage.close();
 		});
 
 		String c1 = "依價格排序";
