@@ -33,7 +33,7 @@ public class FilterFrame extends Stage {
 		Button button1 = new Button("Back to Home");
 		button1.setOnAction(e -> {
 			new FirstFrame().show();
-			// this.close(); // Close current window
+			this.close(); // Close current window
 		});
 
 		Button button2 = new Button("Go to Map");
@@ -115,7 +115,7 @@ public class FilterFrame extends Stage {
 		        Place[] selectedPlaces = selectedPlacesList.toArray(new Place[0]);
 
 		        new MapFrame(selectedPlaces).start(new Stage());
-		        // this.close(); // Close current window
+		        this.close(); // Close current window
 		    } catch (SQLException ex) {
 		        ex.printStackTrace();
 		    }

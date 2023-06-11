@@ -71,12 +71,16 @@ public class MapFrame extends Application {
 
         Button button1 = new Button("Back to Filter");
         button1.setStyle("-fx-background-color: white; -fx-text-fill: #FAA381; -fx-font-size: 14px; -fx-font-family: 'Consolas'; -fx-font-weight: bold;");
-        button1.setPrefWidth(150);
+        button1.setPrefWidth(140);
         button1.setPrefHeight(50);
-		button1.setOnAction(e -> new FilterFrame().show());
+		button1.setOnAction(e ->{ new FilterFrame().show();
+		primaryStage.close();
+		});
 		Button button2 = new Button("Quick selction");
 		button2.setStyle("-fx-background-color: white; -fx-text-fill: #FAA381; -fx-font-size: 14px; -fx-font-family: 'Consolas'; -fx-font-weight: bold;");
-
+		button2.setPrefWidth(140);
+        button2.setPrefHeight(50);
+		
 		button2.setOnAction(e -> {
 			if (places.length <= 6) {
 				String[] names = new String[places.length];
@@ -103,6 +107,7 @@ public class MapFrame extends Application {
 				}
 				new RouletteFrame(names).show();
 			}
+			primaryStage.close();
 		});
 
 		String c1 = "依價格排序";
@@ -110,9 +115,11 @@ public class MapFrame extends Application {
 		ChoiceBox<String> cb = new ChoiceBox<String>();
 		cb.getItems().addAll(c1, c2);
 		cb.setValue("依評價排序");
+		cb.setStyle("-fx-background-color: white; -fx-font-size: 14px; -fx-font-family: 'Consolas'; -fx-font-weight: bold;");
 		ChoiceBox<String> comboBox = new ChoiceBox<String>();
 		comboBox.getItems().addAll("升序", "降序");
 		comboBox.setValue("升序"); // Set the default selected option
+		comboBox.setStyle("-fx-background-color: white; -fx-font-size: 14px; -fx-font-family: 'Consolas'; -fx-font-weight: bold;");
 
 		TableView<SelectedPlace> resulttable = new TableView<>();
 		TableColumn<SelectedPlace, String> nameCol = new TableColumn<>("name");
@@ -134,10 +141,10 @@ public class MapFrame extends Application {
 		// VBox textContainer = new VBox(output);
 
 		VBox buttonContainer = new VBox();
-		HBox h1 = new HBox();
+		HBox h1 = new HBox(10);
 		h1.getChildren().addAll(cb, comboBox);
 		buttonContainer.getChildren().addAll(h1, resulttable);
-		HBox h2 = new HBox();
+		HBox h2 = new HBox(40);
 		h2.getChildren().addAll(button1, button2);
 		webViewContainer.getChildren().addAll(h2);
 		// output.setAlignment(Pos.BASELINE_RIGHT);

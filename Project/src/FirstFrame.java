@@ -61,12 +61,16 @@ public class FirstFrame extends Stage {
         Button button1 = new Button("Go to Filter");
         button1.setPrefWidth(120);
         button1.setPrefHeight(50);
-        button1.setOnAction(e -> new FilterFrame().show());
+        button1.setOnAction(e -> {new FilterFrame().show();
+        	this.close();
+        });
 
         Button button2 = new Button("Go to Wheel");
         button2.setPrefWidth(120);
         button2.setPrefHeight(50);
-        button2.setOnAction(e -> new RouletteFrame(resNames).show());
+        button2.setOnAction(e ->{ new RouletteFrame(resNames).show();
+        this.close();
+        });
 
         // button(x,y)
         button1.setLayoutX(100); 
